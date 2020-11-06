@@ -14,7 +14,7 @@ def flatten(char):
 
 cifar_10_dir = 'cifar-10-batches-py'
 
-train_data, train_labels, test_data, test_labels = load_cifar_10_data(cifar_10_dir)
+train_data, train_labels, test_data, test_labels, label_names = load_cifar_10_data(cifar_10_dir)
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Preprocessing data
