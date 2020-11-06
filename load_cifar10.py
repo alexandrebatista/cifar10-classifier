@@ -81,4 +81,4 @@ def load_cifar_10_data(data_dir, negatives=False):
     cifar_test_filenames = np.array(cifar_test_filenames)
     cifar_test_labels = np.array(cifar_test_labels)
 
-    return cifar_train_data, cifar_train_labels, cifar_test_data, cifar_test_labels
+    return cifar_train_data, cifar_train_labels, cifar_test_data, cifar_test_labels, cifar_label_names
