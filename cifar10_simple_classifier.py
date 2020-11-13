@@ -23,7 +23,7 @@ train_data, train_labels, test_data, test_labels, label_names = load_cifar_10_da
 train_labels = [str(label) for label in train_labels]
 test_labels = [str(label) for label in test_labels]
 
-threshold = 125
+threshold = 115
 X = np.where(train_data > threshold, 1, 0)
 y = np.where(test_data > threshold, 1, 0)
 # trainingSet, validationSet, testSet = np.split(X, [int(len(X) * 0.8), int(len(X) * 0.9)])
@@ -35,7 +35,7 @@ y = [flatten(sample) for sample in y]
 # ----------------------------------------------------------------------------------------------------------------------
 # Setting model
 
-addressSize = 28
+addressSize = 15
 ignoreZero = False
 
 model = wp.Wisard(addressSize, ignoreZero=ignoreZero, verbose=True)
