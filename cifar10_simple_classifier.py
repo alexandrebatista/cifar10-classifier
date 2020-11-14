@@ -3,11 +3,7 @@ import numpy as np
 import wisardpkg as wp
 
 from load_cifar10 import load_cifar_10_data
-
-
-def flatten(char):
-    return np.reshape(char, (-1,)).tolist()
-
+from tools import evaluation, flatten
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Load data
@@ -24,13 +20,16 @@ train_labels = [str(label) for label in train_labels]
 test_labels = [str(label) for label in test_labels]
 
 threshold = 115
-X = np.where(train_data > threshold, 1, 0)
-y = np.where(test_data > threshold, 1, 0)
-# trainingSet, validationSet, testSet = np.split(X, [int(len(X) * 0.8), int(len(X) * 0.9)])
-# trainingSetY, validationSetY, testSetY = np.split(y, [int(len(y) * 0.8), int(len(y) * 0.9)])
+X_train = np.where(train_data > threshold, 1, 0)
+X_test = np.where(test_data > threshold, 1, 0)
 
-X = [flatten(sample) for sample in X]
-y = [flatten(sample) for sample in y]
+vehicle_labels = ['0', '1', '8', '9']
+
+vehicles_train = ['1' if label in vehicle_labels else '0' for label in train_labels]
+vehicles_test = ['1' if label in vehicle_labels else '0' for label in test_labels]
+
+X_train = [flatten(sample) for sample in X_train]
+X_test = [flatten(sample) for sample in X_test]
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Setting model
@@ -42,18 +41,12 @@ model = wp.Wisard(addressSize, ignoreZero=ignoreZero, verbose=True)
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Training
-model.train(X, train_labels)
+model.train(X_train, train_labels)
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Testing
-out = model.classify(y)
+out = model.classify(X_test)
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Evaluation
-hits = 0
-for index in range(0, len(out)):
-    if str(out[index]) == str(test_labels[index]):
-        hits = hits + 1
-
-acc = float(hits) / len(test_labels)
-print('Acc: ' + str(acc))
+evaluation(out, test_labels)
