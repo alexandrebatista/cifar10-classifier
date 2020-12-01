@@ -20,6 +20,14 @@ def print_images(images, grayscale=False):
 def flatten(char):
     return np.reshape(char, (-1,)).tolist()
 
+def filter_data(data, data_labels, filter_labels):
+    filtered_data = []
+    filtered_data_labels = []
+    for i in range(0, len(data)):
+        if str(data_labels[i]) in filter_labels:
+            filtered_data.append(data[i])
+            filtered_data_labels.append(data_labels[i])
+    return filtered_data, filtered_data_labels
 
 def evaluation(estimations, labels):
     hits = 0
